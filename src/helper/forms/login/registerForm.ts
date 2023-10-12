@@ -17,11 +17,18 @@ export const onSubmitRegister = (
 ): void => {
   createAdmin(registerAdmin)
     .then((res) => {
+      console.log("in register");
       notify({
         message: "Usuario creado con exito!",
         typeOfMessage: "success",
       }),
         (window.location.href = "/auth");
     })
-    .catch((err) => notify({ message: `${err}`, typeOfMessage: "error" }));
+    .catch((err) => {
+      console.log(err);
+      notify({
+        message: `${err.response.data.message}`,
+        typeOfMessage: "error",
+      });
+    });
 };

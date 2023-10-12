@@ -1,14 +1,14 @@
-import LoginForm from "@/components/forms/LoginForm.component";
-import ColorModeButton from "../../components/buttons/ColorModeButton.component";
+import LoginAndRegisterForm from "@/components/forms/login/LoginAndRegisterForm.component";
+import ColorModeButton from "../../components/common/buttons/ColorModeButton.component";
 import AuthLayout from "@/layouts/AuthLayout.component";
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-// import RegisterForm from "@/components/forms/RegisterForm.component";
 
 export default function AuthPage() {
-  const [isRegister, setIsRegister] = useState<boolean>(false);
+  const [isRegister, setIsRegister] = useState<boolean>(true);
   const handlerRegister = () => setIsRegister(!isRegister);
+  console.log(isRegister);
 
   return (
     <>
@@ -17,13 +17,13 @@ export default function AuthPage() {
           <ColorModeButton />
 
           <Button onClick={handlerRegister} bgColor="unset">
-            {isRegister ? "login" : "Registrarse"}
+            {isRegister ? "Registrarse" : "Login"}
             <ChevronRightIcon ml="5px" />
           </Button>
         </Flex>
 
-        {isRegister ? <Text>REGISTER</Text> : <LoginForm />}
-        <LoginForm />
+        <LoginAndRegisterForm isRegister={isRegister} />
+        {/* <LoginForm /> */}
       </AuthLayout>
     </>
   );

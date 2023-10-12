@@ -1,5 +1,7 @@
-import { onSubmitLogin } from "@/helper/forms/LoginForm";
+import { onSubmitLogin } from "@/helper/forms/login/loginForm";
+import { onSubmitRegister } from "@/helper/forms/login/registerForm";
 import { ILoginAndRegisterVerify } from "@/models/response/login/ILoginResponse";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Button,
   Flex,
@@ -7,12 +9,21 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   useColorMode,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function LoginForm() {
+interface IFormValidation {
+  isRegister: boolean;
+}
+
+export default function LoginAndRegisterForm({ isRegister }: IFormValidation) {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowPassword = () => setShowPassword(!showPassword);
   const { colorMode } = useColorMode();
 
   const {
@@ -36,10 +47,12 @@ export default function LoginForm() {
         justifyContent={"center"}
         alignItems={"center"}
         flexDirection={"column"}
-        onSubmit={handleSubmit(onSubmitLogin)}
+        onSubmit={handleSubmit((formData) => {
+          isRegister ? onSubmitLogin(formData) : onSubmitRegister(formData);
+        })}
       >
         <Heading m="30px auto" fontSize="32px">
-          Login
+          {isRegister ? "Login" : "Registrarse"}
         </Heading>
 
         {/* Email */}
@@ -80,36 +93,50 @@ export default function LoginForm() {
           Password
         </FormLabel>
 
-        <Input
-          id="password"
-          placeholder="password"
-          type="password"
-          {...register("password", {
-            required: { value: true, message: "este campo es requerido" },
-            maxLength: { value: 12, message: "Maximo 12 caracteres" },
-            minLength: {
-              value: 8,
-              message: "Debe tener minimo 8 caracteres",
-            },
-            pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%.*?&#])[A-Za-z\d@$!%.*?&#]{8,}$/,
-              message:
-                "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula, un número y un carácter especial (como @$!%*?&#).",
-            },
-          })}
-          mb="20px"
-          borderRadius="8px"
-          _placeholder={{
-            color: colorMode === "light" ? "" : "palette.white.100",
-            opacity: 0.6,
-            fontSize: "14px",
-          }}
-          _focusVisible={{
-            borderColor: "#23bbb3",
-            boxShadow: "0 0 0 1px #23bbb3",
-          }}
-        />
+        <InputGroup size="md">
+          <Input
+            id="password"
+            placeholder="Enter password"
+            type={showPassword ? "text" : "password"}
+            {...register("password", {
+              required: { value: true, message: "este campo es requerido" },
+              maxLength: { value: 12, message: "Maximo 12 caracteres" },
+              minLength: {
+                value: 8,
+                message: "Debe tener minimo 8 caracteres",
+              },
+              pattern: {
+                value:
+                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%.*?&#])[A-Za-z\d@$!%.*?&#]{8,}$/,
+                message:
+                  "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula, un número y un carácter especial (como @$!%*?&#).",
+              },
+            })}
+            mb="20px"
+            borderRadius="8px"
+            _placeholder={{
+              color: colorMode === "light" ? "" : "palette.white.100",
+              opacity: 0.6,
+              fontSize: "14px",
+            }}
+            _focusVisible={{
+              borderColor: "#23bbb3",
+              boxShadow: "0 0 0 1px #23bbb3",
+            }}
+          />
+
+          <InputRightElement width="3rem">
+            <Button
+              h="1.75rem"
+              size="sm"
+              onClick={handleShowPassword}
+              bg="none"
+              _hover={{ bg: "none" }}
+            >
+              {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
 
         {errors.password && (
           <Text color="red">{errors.password.message?.toString()}</Text>
@@ -126,7 +153,7 @@ export default function LoginForm() {
           type="submit"
           color={"white"}
         >
-          Login
+          Enviar
         </Button>
       </FormControl>
     </Flex>
