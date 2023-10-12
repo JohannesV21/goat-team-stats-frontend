@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -104,4 +104,39 @@ a {
   html {
     color-scheme: dark;
   }
+} */
+
+::-webkit-scrollbar {
+  width: 6px; /* Ancho del scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de fondo de la trayectoria */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2dcc70; /* Color del "pulgar" o "slider" del scrollbar */
+  border-radius: 4px; /* Esquinas redondeadas, similar al estilo de Firefox */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color del "pulgar" al pasar el cursor sobre él */
+}
+
+/*  Internet Explorer y Edge */
+body::-ms-scrollbar {
+  width: 6px;
+}
+
+body::-ms-scrollbar-track {
+  background: #f1f1f1;
+}
+
+body::-ms-scrollbar-thumb {
+  background: #2dcc70;
+  border-radius: 4px;
+}
+
+body::-ms-scrollbar-thumb:hover {
+  background: #555;
 }

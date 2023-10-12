@@ -1,3 +1,4 @@
+import MatchesView from "@/components/match/MatchesView";
 import UserLayout from "@/layouts/UserLayout.component";
 import { Grid, GridItem, Box, useColorMode } from "@chakra-ui/react";
 import Head from "next/head";
@@ -5,6 +6,7 @@ import Head from "next/head";
 export default function Home() {
   const { colorMode } = useColorMode();
   const bgGridItems = colorMode === "light" ? "#FFFFFF" : "RGBA(0, 0, 0, 0.30)";
+
   return (
     <>
       <Head>
@@ -26,12 +28,13 @@ export default function Home() {
             <Grid
               templateColumns={{ base: "1fr", xl: "repeat(9, 1fr)" }}
               templateRows={{
-                base: "70vh repeat(3, minmax(350px, 1fr))",
+                base: "70vh repeat(3, minmax(350px, 100%))",
                 xl: "repeat(2, 1fr)",
               }}
               gap="20px"
               h={{ base: "100%", xl: "86vh" }}
             >
+              {/* Teams */}
               <GridItem
                 gridRow={{ xl: "1 / 3" }}
                 gridColumn={{ xl: "1 / 3" }}
@@ -45,6 +48,8 @@ export default function Home() {
                   red
                 </Box>
               </GridItem>
+
+              {/* Banner */}
               <GridItem
                 borderRadius={{ base: "0 0 10px 10px", md: "6px" }}
                 gridRow={{ base: "1 / 2" }}
@@ -61,20 +66,22 @@ export default function Home() {
                   red
                 </Box>
               </GridItem>
+
+              {/* Matches */}
               <GridItem
                 borderRadius="6px"
                 gridRow={{ xl: "2 / 3" }}
                 gridColumn={{ xl: "3 / 8" }}
-                bgColor={bgGridItems}
+                // bgColor={bgGridItems}
                 w={{ base: "95%", xl: "100%" }}
                 m="0 auto"
                 h={"100%"}
+                overflow="scroll"
               >
-                <Box w={"100%"} h={"100%"}>
-                  red
-                </Box>
+                <MatchesView />
               </GridItem>
 
+              {/* Tournaments */}
               <GridItem
                 borderRadius="6px"
                 gridRow={{ xl: "1 / 3" }}
