@@ -12,7 +12,6 @@ export const useGetMatchesbyTournament = (id_tournament: number) => {
     setIsLoading(true);
     GetAllMatchesByTournament(id_tournament)
       .then((res) => {
-        console.log("useGetMatchesbyTournament", res);
         setMatchesByTournament(res);
         setIsLoading(false);
       })

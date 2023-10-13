@@ -1,7 +1,9 @@
 import MatchesView from "@/components/match/MatchesView";
 import { useGetMatches } from "@/hooks/match/useGetMatches";
 import UserLayout from "@/layouts/UserLayout.component";
+import { getTokenFromServerCookies } from "@/services/login/loginService";
 import { Grid, GridItem, Box, useColorMode } from "@chakra-ui/react";
+import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Head from "next/head";
 
 export default function Home() {
@@ -107,4 +109,19 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = getTokenFromServerCookies(context.req as NextApiRequest);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }

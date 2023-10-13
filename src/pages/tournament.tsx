@@ -2,8 +2,10 @@ import CustomModal from "@/components/common/modal/CustomModal";
 import CreateAndUpdateForm from "@/components/forms/tournament/CreateAndUpdateForm.component";
 import TournamentCard from "@/components/tournament/TournamentCard";
 import UserLayout from "@/layouts/UserLayout.component";
+import { getTokenFromServerCookies } from "@/services/login/loginService";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Flex, Heading, useDisclosure } from "@chakra-ui/react";
+import { GetServerSidePropsContext, NextApiRequest } from "next";
 import Head from "next/head";
 
 export default function TournamentPage() {
@@ -63,4 +65,19 @@ export default function TournamentPage() {
       </UserLayout>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = getTokenFromServerCookies(context.req as NextApiRequest);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }

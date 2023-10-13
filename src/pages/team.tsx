@@ -5,6 +5,8 @@ import UserLayout from "@/layouts/UserLayout.component";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Flex, Heading, useDisclosure } from "@chakra-ui/react";
 import Head from "next/head";
+import { getTokenFromServerCookies } from "@/services/login/loginService";
+import { GetServerSidePropsContext, NextApiRequest } from "next";
 
 export default function TeamPage() {
   const {
@@ -64,4 +66,19 @@ export default function TeamPage() {
       </UserLayout>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = getTokenFromServerCookies(context.req as NextApiRequest);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
 }
