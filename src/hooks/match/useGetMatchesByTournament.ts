@@ -27,20 +27,5 @@ export const useGetMatchesbyTournament = (id_tournament: number) => {
     getMatchesByTournament(id_tournament);
   }, [id_tournament]);
 
-  //   useEffect(() => {
-  //     setIsLoading(true);
-  //     GetAllMatchesByTournament(id_tournament)
-  //       .then((res) => {
-  //         console.log("useGetMatchesbyTournament", res);
-  //         setMatchesByTournament(res);
-  //         setIsLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //         setMatchesByTournament([]);
-  //         setIsLoading(false);
-  //       });
-  //   }, []);
-
   return { matchesByTournament, isLoading };
 };

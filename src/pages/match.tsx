@@ -20,7 +20,11 @@ export default function MatchPage() {
 
       <UserLayout>
         <Box m="30px auto" w="95%">
-          <MatchesView matches={matches} isLoading={isLoading} />
+          <MatchesView
+            matches={matches}
+            isLoading={isLoading}
+            title="Partidos jugados"
+          />
         </Box>
       </UserLayout>
     </>

@@ -255,6 +255,7 @@ export default function TournamentCard() {
           <MatchesView
             matches={matchesByTournament}
             isLoading={isLoadingByTournament}
+            title="Últimos partidos"
           />
         ) : (
           <Text textAlign="center" m="50px auto" fontSize="20px">

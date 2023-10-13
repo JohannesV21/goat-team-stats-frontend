@@ -35,7 +35,9 @@ export default function CustomModal({
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={size}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader bgColor={bgItems}>{isHeader ? tittle : ""}</ModalHeader>
+        <ModalHeader bgColor={bgItems} w={"95%"}>
+          {isHeader ? tittle : ""}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody bgColor={bgItems}>{children}</ModalBody>
         <ModalFooter bgColor={bgItems}></ModalFooter>

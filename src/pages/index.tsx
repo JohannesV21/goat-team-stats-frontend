@@ -80,7 +80,11 @@ export default function Home() {
                 h={"100%"}
                 overflow="scroll"
               >
-                <MatchesView matches={matches} isLoading={isLoading} />
+                <MatchesView
+                  matches={matches}
+                  isLoading={isLoading}
+                  title="Últimos partidos"
+                />
               </GridItem>
 
               {/* Tournaments */}

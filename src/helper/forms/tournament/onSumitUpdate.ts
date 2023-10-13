@@ -14,7 +14,7 @@ export const onSubmitUpdate = ({
   updateTournament(id_tournament, tournamentUpdate)
     .then((res) => {
       notify({
-        message: "Usuario actualizado con exito!",
+        message: "Tournament actualizado con exito!",
         typeOfMessage: "success",
       }),
         (window.location.href = "/tournament");

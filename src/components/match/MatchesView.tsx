@@ -16,10 +16,15 @@ import { IMatchResponse } from "@/models/response/IMatchResponse";
 
 export interface IMatchesView {
   isLoading: boolean;
+  title: string;
   matches: Array<IMatchResponse>;
 }
 
-export default function MatchesView({ matches, isLoading }: IMatchesView) {
+export default function MatchesView({
+  matches,
+  isLoading,
+  title,
+}: IMatchesView) {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedMatch, setSelectedMatch] = useState<number>(0);
@@ -33,7 +38,7 @@ export default function MatchesView({ matches, isLoading }: IMatchesView) {
   return (
     <Box w="100%">
       <Heading as="h3" m="15px 0 15px 10px" fontSize="20px">
-        Últimos partidos
+        {title}
       </Heading>
 
       {matches.map((match) => {

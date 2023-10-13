@@ -23,8 +23,12 @@ import { FaTrash } from "react-icons/fa";
 import { AiFillEye } from "react-icons/ai";
 import CustomModal from "../common/modal/CustomModal";
 import { useGetTeams } from "@/hooks/team/useGetTeams";
+import { FaPeopleGroup } from "react-icons/fa6";
 import CreateAndUpdateTeam from "../forms/team/CreateAndUpdateTeam.component";
 import { deleteTeamHelper } from "@/helper/forms/team/deleteTeamHelper";
+import { IUserResponse } from "@/models/response/IUserResponse";
+import UsersTable from "../user/UsersTable";
+import { useGetUsers } from "@/hooks/user/useGetUsers";
 
 interface ISelectTeam {
   id_team: number;
@@ -49,6 +53,13 @@ export default function TeamCard() {
     onClose: onCloseUpdateTeam,
   } = useDisclosure();
 
+  // Users team Modal
+  const {
+    isOpen: isOpenUsersTeam,
+    onOpen: onOpenUsersTeam,
+    onClose: onCloseUsersTeam,
+  } = useDisclosure();
+
   // Delete team Modal
   const {
     isOpen: isOpenDeleteTeam,
@@ -56,14 +67,14 @@ export default function TeamCard() {
     onClose: onCloseDeleteTeam,
   } = useDisclosure();
 
-  // View details
+  // View details Modal
   const {
     isOpen: isOpenDetailsTeam,
     onOpen: onOpenDetailsTeam,
     onClose: onCloseDetailsTeam,
   } = useDisclosure();
 
-  // Update team  list
+  // Update team list
   useEffect(() => {
     setTeamsData(teams);
   }, [teams]);
@@ -71,6 +82,11 @@ export default function TeamCard() {
   // Getting the selected team
   const selectdTeamData = () => {
     return teams.find((team) => team.id_team === selectedTeam.id_team);
+  };
+
+  // filtered to get the technical director
+  const technicalDirector = (users: IUserResponse[]) => {
+    return users.find((user) => user.role.name === "director_tecnico");
   };
 
   // background info cards
@@ -92,7 +108,8 @@ export default function TeamCard() {
           overflow="hidden"
         >
           <>
-            {teamsData.map(({ id_team, name, rif }) => {
+            {teamsData.map(({ id_team, name, rif, users }) => {
+              const director = technicalDirector(users);
               return (
                 <GridItem w="95%" key={id_team}>
                   <Box w="100%" mt="30px">
@@ -136,17 +153,66 @@ export default function TeamCard() {
                             justifyContent="space-between"
                             m="10px 0 10px"
                           >
-                            <Text>rif:</Text>
+                            <Text>RIF:</Text>
                             <Text>{rif}</Text>
                           </Flex>
+
+                          {/* Technical director */}
+                          <Flex
+                            alignItems="center"
+                            justifyContent="space-between"
+                            m="10px 0 10px"
+                          >
+                            <Text>Director técnico:</Text>
+                            <Text>{`${director?.first_name} ${director?.last_name}`}</Text>
+                          </Flex>
+
+                          {/* {directors.map(({ director }) => {
+                            return (
+                              <Flex
+                                alignItems="center"
+                                justifyContent="space-between"
+                                m="10px 0 10px"
+                              >
+                                <Text>Director técnico:</Text>
+                                <Text>{`${director?.first_name} ${director?.last_name}`}</Text>
+                              </Flex>
+                            );
+                          })} */}
+
+                          {/* {users.map((user) => {
+                            const technicalDirector =
+                              user.role.name === "director_tecnico"
+                                ? `${user.first_name} ${user.last_name}`
+                                : "-";
+                            return (
+                              <Flex
+                                alignItems="center"
+                                justifyContent="space-between"
+                                m="10px 0 10px"
+                              >
+                                <Text>Director técnico:</Text>
+                                <Text>{technicalDirector}</Text>
+                              </Flex>
+                            );
+                          })} */}
 
                           <Divider m="15px 0 30px" />
                         </Box>
 
                         {/* buttons for modal actions */}
-                        <Flex justifyContent="flex-end" mb="10px" gap={6}>
+                        <Flex
+                          justifyContent={{
+                            base: "space-between",
+                            md: "flex-end",
+                          }}
+                          m="0 auto 10px"
+                          gap={6}
+                          w={{ base: "90%", md: "100%" }}
+                        >
                           {/* Details button */}
                           <Box
+                            title="Detalles"
                             cursor="pointer"
                             _hover={{ transform: "scale(1.1)" }}
                             _active={{ transform: "scale(0.99)" }}
@@ -158,11 +224,29 @@ export default function TeamCard() {
                               });
                             }}
                           >
-                            <AiFillEye size={"18px"} color="#2DCC70" />
+                            <AiFillEye size={"20px"} color="#2DCC70" />
+                          </Box>
+
+                          {/* Users team button */}
+                          <Box
+                            title="Jugadores"
+                            cursor="pointer"
+                            _hover={{ transform: "scale(1.1)" }}
+                            _active={{ transform: "scale(0.99)" }}
+                            onClick={() => {
+                              onOpenUsersTeam();
+                              setSelectedTeam({
+                                id_team,
+                                name,
+                              });
+                            }}
+                          >
+                            <FaPeopleGroup size={"20px"} color="orange" />
                           </Box>
 
                           {/* Edit button */}
                           <Box
+                            title="Editar"
                             cursor="pointer"
                             _hover={{ transform: "scale(1.1)" }}
                             _active={{ transform: "scale(0.99)" }}
@@ -174,11 +258,12 @@ export default function TeamCard() {
                               });
                             }}
                           >
-                            <HiPencilAlt size={"18px"} color="#4299E1" />
+                            <HiPencilAlt size={"20px"} color="#4299E1" />
                           </Box>
 
                           {/* Delete button */}
                           <Box
+                            title="Borrar"
                             cursor="pointer"
                             _hover={{ transform: "scale(1.1)" }}
                             _active={{ transform: "scale(0.99)" }}
@@ -207,20 +292,6 @@ export default function TeamCard() {
         </Text>
       )}
 
-      {/* Update team modal */}
-      <CustomModal
-        isHeader={true}
-        isOpen={isOpenUpdateTeam}
-        onClose={onCloseUpdateTeam}
-        size={{ base: "sm", md: "md" }}
-        tittle={`Editar ${setSelectedTeam.name}`}
-      >
-        <CreateAndUpdateTeam
-          id_team={selectedTeam.id_team}
-          teamToUpdate={selectdTeamData()}
-        />
-      </CustomModal>
-
       {/* Details team modal */}
       <CustomModal
         isHeader={true}
@@ -234,6 +305,31 @@ export default function TeamCard() {
           isLoading={isLoadingByTournament}
         /> */}
         <h1>details</h1>
+      </CustomModal>
+
+      {/* Update team modal */}
+      <CustomModal
+        isHeader={true}
+        isOpen={isOpenUpdateTeam}
+        onClose={onCloseUpdateTeam}
+        size={{ base: "sm", md: "md" }}
+        tittle={`Editar ${selectedTeam.name}`}
+      >
+        <CreateAndUpdateTeam
+          id_team={selectedTeam.id_team}
+          teamToUpdate={selectdTeamData()}
+        />
+      </CustomModal>
+
+      {/* Users team modal */}
+      <CustomModal
+        isHeader={true}
+        isOpen={isOpenUsersTeam}
+        onClose={onCloseUsersTeam}
+        size={{ base: "full" }}
+        tittle={`${selectedTeam.name}`}
+      >
+        <UsersTable id_team={selectedTeam.id_team} />
       </CustomModal>
 
       {/* Delete to team dialog */}

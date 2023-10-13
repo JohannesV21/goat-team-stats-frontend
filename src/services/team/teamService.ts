@@ -22,13 +22,13 @@ export const getAllTeams = async (): Promise<Array<ITeamResponse>> => {
 
 // service to create team
 export const createTeam = async (
-  createTournament: ICreateAndUpdateTeam
+  createTeam: ICreateAndUpdateTeam
 ): Promise<ITeamResponse> => {
   try {
     const response = await http.post<
       ICreateAndUpdateTeam,
       AxiosResponse<ITeamResponse>
-    >(`${BACK_URL}/team`, createTournament, {
+    >(`${BACK_URL}/team`, createTeam, {
       headers: { Authorization: loadStorage().token },
     });
     return response.data;

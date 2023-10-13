@@ -11,3 +11,13 @@ export interface IUserResponse {
   updatedAt: Date;
   id_user: number;
 }
+
+export interface ICreateAndUpdateUser {
+  first_name: string;
+  last_name: string;
+  birthdate: string;
+  cedula: string;
+  phone: string;
+  role: number;
+  team: number;
+}

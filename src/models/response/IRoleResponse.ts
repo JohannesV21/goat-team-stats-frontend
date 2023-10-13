@@ -4,3 +4,7 @@ export interface IRoleResponse {
   updatedAt: Date;
   id_role: number;
 }
+
+export interface ICreateAndUpdateRole {
+  name: string;
+}
