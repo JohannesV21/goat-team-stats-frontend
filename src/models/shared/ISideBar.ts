@@ -1,10 +1,9 @@
 import { clearStorage } from "@/services/login/loginService";
 import { IconType } from "react-icons";
-import { AiOutlineHome, AiFillHome, AiOutlineGroup } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
-import { BsCalendarEvent } from "react-icons/bs";
-import { HiOutlineChartSquareBar } from "react-icons/hi";
-import { HiOutlineUsers } from "react-icons/hi";
+import { GiSoccerKick, GiTrophiesShelf } from "react-icons/gi";
+import { RiTeamFill } from "react-icons/ri";
 
 export interface Iicons {
   id: number;
@@ -24,27 +23,21 @@ export const icons: Array<Iicons> = [
   },
   {
     id: 2,
-    icon: HiOutlineChartSquareBar,
-    text: "Dashboard",
-    url: "/dashboard",
+    icon: RiTeamFill,
+    text: "Equipo",
+    url: "/team",
   },
   {
     id: 3,
-    icon: BsCalendarEvent,
-    text: "Eventos",
-    url: "/events",
+    icon: GiSoccerKick,
+    text: "Partidos",
+    url: "/match",
   },
   {
     id: 4,
-    icon: HiOutlineUsers,
-    text: "Usuarios",
-    url: "/users",
-  },
-  {
-    id: 5,
-    icon: AiOutlineGroup,
-    text: "Tipos de eventos",
-    url: "/event-types",
+    icon: GiTrophiesShelf,
+    text: "Torneos",
+    url: "/tournament",
   },
   {
     id: 6,

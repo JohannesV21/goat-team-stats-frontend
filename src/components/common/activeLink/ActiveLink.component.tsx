@@ -34,7 +34,6 @@ export default function ActiveLink({
       w="100%"
       _hover={{
         textDecoration: "none",
-        bgColor: router.asPath === url ? "none" : hover,
       }}
     >
       {isDrawer ? (

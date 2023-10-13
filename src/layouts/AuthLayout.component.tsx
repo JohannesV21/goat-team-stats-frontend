@@ -15,7 +15,7 @@ export default function AuthLayout({
         w="100%"
         m="0 auto"
         h="100vh"
-        bgImage={"/images/bannerLogin.webp"}
+        bgImage={"/images/loginBanner.webp"}
         bgColor="green"
         bgRepeat="no-repeat"
         bgPosition="center"

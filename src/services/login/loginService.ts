@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+import { NextApiRequest } from "next";
 import {
   ILoginResponse,
   ILoginAndRegisterVerify,
@@ -36,16 +38,43 @@ export const login = (
 };
 
 export const saveStorage = (admin: IAdminInfo) => {
-  localStorage.setItem("admin", JSON.stringify(admin));
+  // Guarda cada propiedad en una cookie
+  Cookies.set("id_admin", admin.id_admin.toString());
+  Cookies.set("email", admin.email);
+  Cookies.set("token", admin.token);
+  Cookies.set("refresh", admin.refresh);
+
   window.location.href = "/";
 };
 
 export const loadStorage = (): IAdminInfo => {
-  const adminStorage = JSON.parse(localStorage.getItem("admin") || "{}");
-  return adminStorage;
+  // Recupera cada propiedad de las cookies
+  const id_admin = parseInt(Cookies.get("id_admin") || "0");
+  const email = Cookies.get("email") || "";
+  const token = Cookies.get("token") || "";
+  const refresh = Cookies.get("refresh") || "";
+
+  return { id_admin, email, token, refresh };
 };
 
 export const clearStorage = () => {
-  localStorage.removeItem("admin");
+  // Elimina cada cookie
+  Cookies.remove("id_admin");
+  Cookies.remove("email");
+  Cookies.remove("token");
+  Cookies.remove("refresh");
+
   window.location.href = "/auth";
+};
+
+export const getTokenFromServerCookies = (
+  req: NextApiRequest
+): string | undefined => {
+  const rawCookies = req.headers.cookie?.split("; ");
+  const parsedCookies: { [key: string]: string } = {};
+  rawCookies?.forEach((rawCookie) => {
+    const [key, value] = rawCookie.split("=");
+    parsedCookies[key] = value;
+  });
+  return parsedCookies["token"];
 };

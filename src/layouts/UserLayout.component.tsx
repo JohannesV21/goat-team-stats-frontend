@@ -3,7 +3,6 @@ import MobileNavbar from "@/shared/navbar/MobileNavbar.component";
 import SideBar from "@/shared/sidebar/SideBar.component";
 import {
   Box,
-  Divider,
   Grid,
   GridItem,
   useColorMode,
@@ -19,7 +18,12 @@ export default function UserLayout({
   const { colorMode } = useColorMode();
 
   return (
-    <Grid templateColumns={{ base: "1fr", md: "80px 1fr" }} w="100%" m="0 auto">
+    <Grid
+      templateColumns={{ base: "1fr", md: "80px 1fr" }}
+      w="100%"
+      m="0 auto"
+      h="100vh"
+    >
       {/* Mini sidebar */}
       <GridItem
         display={{ base: "none", md: "block" }}
@@ -37,9 +41,7 @@ export default function UserLayout({
       <GridItem w={{ base: "100%", md: "100%" }} m="0 auto" overflow="auto">
         {viewport ? <DesktopNavbar /> : <MobileNavbar />}
 
-        <Box m="20px auto 0" w={{ base: "90%", md: "95%" }}>
-          {children}
-        </Box>
+        <Box w={{ base: "100%" }}>{children}</Box>
       </GridItem>
     </Grid>
   );
