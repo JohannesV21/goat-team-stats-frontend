@@ -28,7 +28,8 @@ import CreateAndUpdateTeam from "../forms/team/CreateAndUpdateTeam.component";
 import { deleteTeamHelper } from "@/helper/forms/team/deleteTeamHelper";
 import { IUserResponse } from "@/models/response/IUserResponse";
 import UsersTable from "../user/UsersTable";
-import { useGetUsers } from "@/hooks/user/useGetUsers";
+import { useGetMatchesbyTeam } from "@/hooks/match/useGetMatchesByTeam";
+import MatchesView from "../match/MatchesView";
 
 interface ISelectTeam {
   id_team: number;
@@ -41,6 +42,11 @@ export default function TeamCard() {
     id_team: 0,
     name: "",
   });
+
+  // get matches by team
+  const { isLoading: isLoadingByTeam, matchesByTeam } = useGetMatchesbyTeam(
+    selectedTeam.id_team
+  );
 
   // get all teams
   const { isLoading, teams } = useGetTeams();
@@ -167,36 +173,6 @@ export default function TeamCard() {
                             <Text>{`${director?.first_name} ${director?.last_name}`}</Text>
                           </Flex>
 
-                          {/* {directors.map(({ director }) => {
-                            return (
-                              <Flex
-                                alignItems="center"
-                                justifyContent="space-between"
-                                m="10px 0 10px"
-                              >
-                                <Text>Director técnico:</Text>
-                                <Text>{`${director?.first_name} ${director?.last_name}`}</Text>
-                              </Flex>
-                            );
-                          })} */}
-
-                          {/* {users.map((user) => {
-                            const technicalDirector =
-                              user.role.name === "director_tecnico"
-                                ? `${user.first_name} ${user.last_name}`
-                                : "-";
-                            return (
-                              <Flex
-                                alignItems="center"
-                                justifyContent="space-between"
-                                m="10px 0 10px"
-                              >
-                                <Text>Director técnico:</Text>
-                                <Text>{technicalDirector}</Text>
-                              </Flex>
-                            );
-                          })} */}
-
                           <Divider m="15px 0 30px" />
                         </Box>
 
@@ -298,13 +274,13 @@ export default function TeamCard() {
         isOpen={isOpenDetailsTeam}
         onClose={onCloseDetailsTeam}
         size={{ base: "sm", md: "3xl" }}
-        tittle={`Detalles del torneo`}
+        tittle={`Detalles de los partidos`}
       >
-        {/* <MatchesView
-          matches={matchesByTournament}
-          isLoading={isLoadingByTournament}
-        /> */}
-        <h1>details</h1>
+        <MatchesView
+          title=""
+          matches={matchesByTeam}
+          isLoading={isLoadingByTeam}
+        />
       </CustomModal>
 
       {/* Update team modal */}
