@@ -1,6 +1,3 @@
-import { useGetMatches } from "@/hooks/match/useGetMatches";
-import { ISelectMatch } from "@/models/components/IMatch";
-import { IMatchResponse } from "@/models/response/IMatchResponse";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -15,10 +12,15 @@ import {
 import React, { useState } from "react";
 import CustomModal from "../common/modal/CustomModal";
 import MoreDetailsMatch from "./MoreDetailsMatch";
+import { IMatchResponse } from "@/models/response/IMatchResponse";
 
-export default function MatchesView() {
+export interface IMatchesView {
+  isLoading: boolean;
+  matches: Array<IMatchResponse>;
+}
+
+export default function MatchesView({ matches, isLoading }: IMatchesView) {
   const { colorMode } = useColorMode();
-  const { matches, isLoading } = useGetMatches();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedMatch, setSelectedMatch] = useState<number>(0);
   const bgGridItems = colorMode === "light" ? "#FFFFFF" : "RGBA(0, 0, 0, 0.30)";

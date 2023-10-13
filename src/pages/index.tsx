@@ -1,10 +1,12 @@
 import MatchesView from "@/components/match/MatchesView";
+import { useGetMatches } from "@/hooks/match/useGetMatches";
 import UserLayout from "@/layouts/UserLayout.component";
 import { Grid, GridItem, Box, useColorMode } from "@chakra-ui/react";
 import Head from "next/head";
 
 export default function Home() {
   const { colorMode } = useColorMode();
+  const { matches, isLoading } = useGetMatches();
   const bgGridItems = colorMode === "light" ? "#FFFFFF" : "RGBA(0, 0, 0, 0.30)";
 
   return (
@@ -78,7 +80,7 @@ export default function Home() {
                 h={"100%"}
                 overflow="scroll"
               >
-                <MatchesView />
+                <MatchesView matches={matches} isLoading={isLoading} />
               </GridItem>
 
               {/* Tournaments */}

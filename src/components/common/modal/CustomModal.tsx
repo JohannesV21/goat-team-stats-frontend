@@ -7,6 +7,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  useColorMode,
 } from "@chakra-ui/react";
 
 type hexadecimalColor = `#${string}`;
@@ -28,14 +29,16 @@ export default function CustomModal({
   size,
   isHeader,
 }: ICustomModal) {
+  const { colorMode } = useColorMode();
+  const bgItems = colorMode === "light" ? "#FFFFFF" : "RGBA(0, 0, 0, 0.30)";
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={size}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{isHeader ? tittle : ""}</ModalHeader>
+        <ModalHeader bgColor={bgItems}>{isHeader ? tittle : ""}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>{children}</ModalBody>
-        <ModalFooter></ModalFooter>
+        <ModalBody bgColor={bgItems}>{children}</ModalBody>
+        <ModalFooter bgColor={bgItems}></ModalFooter>
       </ModalContent>
     </Modal>
   );

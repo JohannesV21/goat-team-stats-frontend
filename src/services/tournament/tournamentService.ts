@@ -61,11 +61,11 @@ export const updateTournament = async (
 
 export const deleteTournament = async (
   id_tournament: number
-): Promise<ISuccessResponse<ITournamentResponse>> => {
+): Promise<ITournamentResponse> => {
   try {
     const response = await http.delete<
       never,
-      AxiosResponse<ISuccessResponse<ITournamentResponse>>
+      AxiosResponse<ITournamentResponse>
     >(`${BACK_URL}/tournament/${id_tournament}`, {
       headers: { Authorization: loadStorage().token },
     });

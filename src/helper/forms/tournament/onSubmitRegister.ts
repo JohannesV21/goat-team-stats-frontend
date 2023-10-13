@@ -9,7 +9,7 @@ export const onSubmitRegister = (
   createTournament(registerValues)
     .then((res) => {
       notify({
-        message: "Usuario creado con exito!",
+        message: "Torneo creado con exito!",
         typeOfMessage: "success",
       }),
         (window.location.href = "/tournament");

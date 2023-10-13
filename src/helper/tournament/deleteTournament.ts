@@ -5,14 +5,14 @@ import { notify } from "@/shared/toastify/ToastConfig";
 
 export const deleteTournamentHelper = (id_tournament: number) => {
   deleteTournament(id_tournament)
-    .then((res: ISuccessResponse<ITournamentResponse>) => {
+    .then((res: ITournamentResponse) => {
       console.log(res);
       notify({
-        message: `Eliminado con exito ${res.data.name}`,
+        message: `Eliminado con exito `,
         typeOfMessage: "success",
       });
     })
     .catch((err) => {
-      notify({ message: `Error al eliminar`, typeOfMessage: "error" });
+      notify({ message: `Error al eliminar `, typeOfMessage: "error" });
     });
 };
