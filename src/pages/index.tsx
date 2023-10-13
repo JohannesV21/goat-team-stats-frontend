@@ -29,81 +29,24 @@ export default function Home() {
             w={{ xl: "95%" }}
             m={{ base: "20px auto 0 ", md: "20px auto 0" }}
           >
-            <Grid
-              templateColumns={{ base: "1fr", xl: "repeat(9, 1fr)" }}
-              templateRows={{
-                base: "70vh repeat(3, minmax(350px, 100%))",
-                xl: "repeat(2, 1fr)",
-              }}
-              gap="20px"
-              h={{ base: "100%", xl: "86vh" }}
-            >
-              {/* Teams */}
-              <GridItem
-                gridRow={{ xl: "1 / 3" }}
-                gridColumn={{ xl: "1 / 3" }}
-                borderRadius="6px"
-                bgColor={bgGridItems}
-                w={{ base: "95%", xl: "100%" }}
-                m="0 auto"
-                h={"100%"}
-              >
-                <Box w={"100%"} h={"100%"}>
-                  red
-                </Box>
-              </GridItem>
+            <Box
+              bgImage="/images/bannerHome.webp"
+              borderRadius="10px"
+              bgSize="cover"
+              bgPosition="center"
+              bgRepeat="no-repeat"
+              w={{ base: "100%", md: "95%", xl: "100%" }}
+              h={"50vh"}
+              m="0 auto 30px"
+            />
 
-              {/* Banner */}
-              <GridItem
-                borderRadius={{ base: "0 0 10px 10px", md: "6px" }}
-                gridRow={{ base: "1 / 2" }}
-                gridColumn={{ xl: "3 / 8" }}
-                bgImage="/images/bannerGoat.webp"
-                bgSize="cover"
-                bgPosition="center"
-                bgRepeat="no-repeat"
-                w={{ base: "100%", md: "95%", xl: "100%" }}
-                h={"100%"}
-                m="0 auto"
-              >
-                <Box w={"100%"} h={"100%"}>
-                  red
-                </Box>
-              </GridItem>
+            <MatchesView
+              matches={matches}
+              isLoading={isLoading}
+              title="Últimos partidos"
+            />
 
-              {/* Matches */}
-              <GridItem
-                borderRadius="6px"
-                gridRow={{ xl: "2 / 3" }}
-                gridColumn={{ xl: "3 / 8" }}
-                // bgColor={bgGridItems}
-                w={{ base: "95%", xl: "100%" }}
-                m="0 auto"
-                h={"100%"}
-                overflow="scroll"
-              >
-                <MatchesView
-                  matches={matches}
-                  isLoading={isLoading}
-                  title="Últimos partidos"
-                />
-              </GridItem>
-
-              {/* Tournaments */}
-              <GridItem
-                borderRadius="6px"
-                gridRow={{ xl: "1 / 3" }}
-                gridColumn={{ xl: "8 / 10" }}
-                bgColor={bgGridItems}
-                w={{ base: "95%", xl: "100%" }}
-                h={"100%"}
-                m="0 auto"
-              >
-                <Box w={"100%"} h={"100%"}>
-                  red
-                </Box>
-              </GridItem>
-            </Grid>
+            {/*  */}
           </Box>
         </UserLayout>
       </main>

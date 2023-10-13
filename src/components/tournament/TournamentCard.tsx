@@ -108,13 +108,13 @@ export default function TournamentCard() {
                     <Box w="100%" mt="30px">
                       {/* Image */}
                       <Box
-                        h="150px"
+                        h="200px"
                         p="50px"
                         borderRadius="8px"
                         bgColor="palette.green"
-                        bgImage={"/images/bannerGoat.webp"}
+                        bgImage={"/images/bannerTournament.webp"}
                         bgSize="cover"
-                        bgPosition={"center"}
+                        bgPosition={"top"}
                       />
 
                       <Skeleton isLoaded={!isLoading} borderRadius="8px">
