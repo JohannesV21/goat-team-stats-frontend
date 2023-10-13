@@ -1,3 +1,5 @@
+import { ITeamResponse } from "./ITeamResponse";
+
 export interface IMatchResponse {
   date: string;
   opponent_name: string;
@@ -9,19 +11,11 @@ export interface IMatchResponse {
   shots_on_goal: number;
   completed_passes: number;
   fouls_comitted: number;
-  team: ITeam;
+  team: ITeamResponse;
   tournament: ITournament;
   createdAt: Date;
   updatedAt: Date;
   id_match: number;
-}
-
-export interface ITeam {
-  name: string;
-  rif: string;
-  createdAt: Date;
-  updatedAt: Date;
-  id_team: number;
 }
 
 export interface ITournament {

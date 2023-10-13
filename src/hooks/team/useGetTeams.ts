@@ -1,24 +1,25 @@
-import { IMatchResponse } from "@/models/response/IMatchResponse";
+import { ITeamResponse } from "@/models/response/ITeamResponse";
 import { getAllMatches } from "@/services/match/matchService";
+import { getAllTeams } from "@/services/team/teamService";
 import { useEffect, useState } from "react";
 
-export const useGetMatches = () => {
-  const [matches, setmatches] = useState<Array<IMatchResponse>>([]);
+export const useGetTeams = () => {
+  const [teams, setTeams] = useState<Array<ITeamResponse>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoading(true);
-    getAllMatches()
+    getAllTeams()
       .then((res) => {
-        setmatches(res);
+        setTeams(res);
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setmatches([]);
+        setTeams([]);
         setIsLoading(false);
       });
   }, []);
 
-  return { matches, isLoading };
+  return { teams, isLoading };
 };

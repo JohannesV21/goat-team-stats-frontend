@@ -1,9 +1,8 @@
 import { clearStorage } from "@/services/login/loginService";
 import { IconType } from "react-icons";
-import { AiFillHome, AiOutlineGroup } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
-import { HiOutlineUsers } from "react-icons/hi";
-import { GiSoccerKick } from "react-icons/gi";
+import { GiSoccerKick, GiTrophiesShelf } from "react-icons/gi";
 import { RiTeamFill } from "react-icons/ri";
 
 export interface Iicons {
@@ -36,9 +35,9 @@ export const icons: Array<Iicons> = [
   },
   {
     id: 4,
-    icon: HiOutlineUsers,
-    text: "Usuarios",
-    url: "/users",
+    icon: GiTrophiesShelf,
+    text: "Torneos",
+    url: "/tournament",
   },
   {
     id: 6,
