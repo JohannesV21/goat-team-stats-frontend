@@ -10,3 +10,9 @@ export interface ITeamResponse {
   id_team: number;
   users: Array<IUserResponse>;
 }
+
+export interface ICreateAndUpdateTeam {
+  name: string;
+  rif: string;
+  admin?: number;
+}

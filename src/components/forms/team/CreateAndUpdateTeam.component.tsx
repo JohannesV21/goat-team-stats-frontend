@@ -1,9 +1,13 @@
+import { onSubmitRegisterTeam } from "@/helper/forms/team/onSubmitCreateTeam";
+import { onSubmitUpdateTeam } from "@/helper/forms/team/onSubmitUpdateTeam";
 import { onSubmitRegister } from "@/helper/forms/tournament/onSubmitRegister";
 import { onSubmitUpdate } from "@/helper/forms/tournament/onSumitUpdate";
 import {
-  ICreateAndUpdateTournament,
-  ITournamentResponse,
-} from "@/models/response/ITournamentResponse";
+  ICreateAndUpdateTeam,
+  ITeamResponse,
+} from "@/models/response/ITeamResponse";
+
+import { loadStorage } from "@/services/login/loginService";
 import {
   Button,
   Flex,
@@ -16,21 +20,21 @@ import {
 import React from "react";
 import { useForm } from "react-hook-form";
 
-interface ITournamentRegisterUpdate {
-  id_tournament?: number;
-  tournamentToUpdate?: ITournamentResponse | undefined;
+interface ITeamRegisterUpdate {
+  id_team?: number;
+  teamToUpdate?: ITeamResponse | undefined;
 }
 
-export default function CreateAndUpdateForm({
-  id_tournament,
-  tournamentToUpdate,
-}: ITournamentRegisterUpdate) {
+export default function CreateAndUpdateTeam({
+  id_team,
+  teamToUpdate,
+}: ITeamRegisterUpdate) {
   // Use form
   const {
     handleSubmit,
     register,
     formState: { isSubmitting, errors },
-  } = useForm<ICreateAndUpdateTournament>();
+  } = useForm<ICreateAndUpdateTeam>();
   const { colorMode } = useColorMode();
 
   return (
@@ -41,23 +45,22 @@ export default function CreateAndUpdateForm({
         justifyContent={"center"}
         alignItems={"center"}
         flexDirection={"column"}
-        onSubmit={handleSubmit((tournamentData) => {
-          id_tournament
-            ? onSubmitUpdate({
-                id_tournament,
-                tournamentUpdate: tournamentData,
-              })
-            : onSubmitRegister(tournamentData);
+        onSubmit={handleSubmit((teamData) => {
+          teamData.admin = loadStorage().id_admin;
+
+          id_team
+            ? onSubmitUpdateTeam({ id_team, teamUpdate: teamData })
+            : onSubmitRegisterTeam(teamData);
         })}
       >
         {/* Name */}
         <FormLabel w="90%" htmlFor="name" textAlign={"start"} pl="5px">
-          Nombre del torneo
+          Nombre del Equipo
         </FormLabel>
         <Input
           id="name"
-          placeholder="Liga BBVA"
-          defaultValue={tournamentToUpdate?.name}
+          placeholder="Nombre del equipo"
+          defaultValue={teamToUpdate?.name}
           type="text"
           {...register("name", {
             required: { value: true, message: "este campo es requerido" },
@@ -83,16 +86,26 @@ export default function CreateAndUpdateForm({
           <Text color="red">{errors.name.message?.toString()}</Text>
         )}
 
-        {/* Init date */}
-        <FormLabel w="90%" htmlFor="init_date" textAlign={"start"} pl="5px">
-          Fecha de inicio
+        {/* Rif */}
+        <FormLabel w="90%" htmlFor="rif" textAlign={"start"} pl="5px">
+          Rif
         </FormLabel>
         <Input
-          id="init_date"
-          defaultValue={tournamentToUpdate?.init_date}
-          type="date"
-          {...register("init_date", {
+          id="rif"
+          placeholder="J-405326360"
+          defaultValue={teamToUpdate?.rif}
+          type="text"
+          {...register("rif", {
             required: { value: true, message: "este campo es requerido" },
+            minLength: {
+              value: 2,
+              message: "Debe tener como minimo dos caracteres",
+            },
+            pattern: {
+              value: /^[J]-\d{1,10}$/,
+              message:
+                "El formato no es válido. Debe ser 'J-' seguido de hasta 9 números.",
+            },
           })}
           borderRadius="6px"
           mb="20px"
@@ -107,36 +120,8 @@ export default function CreateAndUpdateForm({
           }}
         />
 
-        {errors.init_date && (
-          <Text color="red">{errors.init_date.message?.toString()}</Text>
-        )}
-
-        {/* End date */}
-        <FormLabel w="90%" htmlFor="end_date" textAlign={"start"} pl="5px">
-          Fecha de fin
-        </FormLabel>
-        <Input
-          id="end_date"
-          defaultValue={tournamentToUpdate?.end_date}
-          type="date"
-          {...register("end_date", {
-            required: { value: true, message: "este campo es requerido" },
-          })}
-          borderRadius="6px"
-          mb="20px"
-          _placeholder={{
-            color: colorMode === "light" ? "" : "palette.white.100",
-            opacity: 0.6,
-            fontSize: "14px",
-          }}
-          _focusVisible={{
-            borderColor: "palette.green",
-            boxShadow: "0 0 0 1px palette.green",
-          }}
-        />
-
-        {errors.end_date && (
-          <Text color="red">{errors.end_date.message?.toString()}</Text>
+        {errors.rif && (
+          <Text color="red">{errors.rif.message?.toString()}</Text>
         )}
 
         <Button
@@ -149,7 +134,7 @@ export default function CreateAndUpdateForm({
           loadingText="loading..."
           type="submit"
         >
-          {!id_tournament ? "Registrar" : "Actualizar"}
+          {!id_team ? "Registrar" : "Actualizar"}
         </Button>
       </FormControl>
     </Flex>

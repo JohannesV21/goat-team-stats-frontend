@@ -4,6 +4,7 @@ import TournamentCard from "@/components/tournament/TournamentCard";
 import UserLayout from "@/layouts/UserLayout.component";
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Flex, Heading, useDisclosure } from "@chakra-ui/react";
+import Head from "next/head";
 
 export default function TournamentPage() {
   const {
@@ -13,6 +14,16 @@ export default function TournamentPage() {
   } = useDisclosure();
   return (
     <>
+      <Head>
+        <title>Goat TeamStats</title>
+        <meta
+          name="description"
+          content="Goat TeamStats: La herramienta esencial para administrar tu equipo de fútbol. Gestiona torneos, jugadores y partidos. Obtén estadísticas detalladas y disfruta de un diseño intuitivo y eficiente."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <UserLayout>
         <Box w={"95%"} m="0 auto 50px" overflow="hidden">
           <Flex alignItems="center" gap="20px" m="30px 0 0 30px" w={"95%"}>

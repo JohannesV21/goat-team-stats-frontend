@@ -24,7 +24,7 @@ import { AiFillEye } from "react-icons/ai";
 import { useGetTournaments } from "@/hooks/tournament/useGetTournaments";
 import CustomModal from "../common/modal/CustomModal";
 import CreateAndUpdateForm from "../forms/tournament/CreateAndUpdateForm.component";
-import { deleteTournamentHelper } from "@/helper/tournament/deleteTournament";
+import { deleteTournamentHelper } from "@/helper/forms/tournament/deleteTournament";
 import { useGetMatchesbyTournament } from "@/hooks/match/useGetMatchesByTournament";
 import MatchesView from "../match/MatchesView";
 
@@ -75,7 +75,7 @@ export default function TournamentCard() {
     setTournamentData(tournaments);
   }, [tournaments]);
 
-  // Getting the selected match
+  // Getting the selected tournament
   const selectdTournamenthData = () => {
     return tournaments.find(
       (tournament) =>
@@ -83,6 +83,7 @@ export default function TournamentCard() {
     );
   };
 
+  // background info cards
   const { colorMode } = useColorMode();
   const bgItems = colorMode === "light" ? "#FFFFFF" : "RGBA(0, 0, 0, 0.30)";
 
@@ -250,10 +251,16 @@ export default function TournamentCard() {
         size={{ base: "sm", md: "3xl" }}
         tittle={`Detalles del torneo`}
       >
-        <MatchesView
-          matches={matchesByTournament}
-          isLoading={isLoadingByTournament}
-        />
+        {matchesByTournament.length !== 0 ? (
+          <MatchesView
+            matches={matchesByTournament}
+            isLoading={isLoadingByTournament}
+          />
+        ) : (
+          <Text textAlign="center" m="50px auto" fontSize="20px">
+            No hay partidos registrados
+          </Text>
+        )}
       </CustomModal>
 
       {/* Delete to tournament dialog */}

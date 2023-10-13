@@ -7,6 +7,7 @@ import {
 } from "@/models/response/ITournamentResponse";
 import { ISuccessResponse } from "@/models/response/IGenericResponse";
 
+// get all tournaments
 export const getAllTournaments = async (): Promise<
   Array<ITournamentResponse>
 > => {
@@ -24,6 +25,7 @@ export const getAllTournaments = async (): Promise<
   }
 };
 
+// service to create tournament
 export const createTournament = async (
   createTournament: ICreateAndUpdateTournament
 ): Promise<ISuccessResponse<ITournamentResponse>> => {
@@ -41,6 +43,7 @@ export const createTournament = async (
   }
 };
 
+// service to update tournament
 export const updateTournament = async (
   id_tournament: number,
   updateTournament: ICreateAndUpdateTournament
@@ -59,6 +62,7 @@ export const updateTournament = async (
   }
 };
 
+// service to delete tournament
 export const deleteTournament = async (
   id_tournament: number
 ): Promise<ITournamentResponse> => {
